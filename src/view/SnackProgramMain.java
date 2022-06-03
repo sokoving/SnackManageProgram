@@ -1,5 +1,7 @@
 package view;
 
+import employee.Employee;
+import employee.EmployeeManager;
 import snack.controller.SnackPantry;
 import snackRequest.controller.SnackRequest;
 
@@ -13,6 +15,7 @@ public class SnackProgramMain {
     private Scanner sc;
     private SnackPantry pantry;
     private SnackRequest request;
+    private EmployeeManager empMgr;
 
     public SnackProgramMain() {
         sc = new Scanner(System.in);
@@ -21,10 +24,95 @@ public class SnackProgramMain {
         emp = new EmployeePage(pantry, request);
         mgr = new ManagerPage();
         snackPage = new SnackPage(pantry, request);
-
+        empMgr = new EmployeeManager();
     }
 
     public void mainMenu() {
+        System.out.println("Together Inc. 홈페이지에 오신것을 환영합니다.");
+        while (true) {
+            System.out.println("================= 로그인 =================");
+            Employee employee;
+            while (true) {
+                System.out.print("ID: ");
+                String id = sc.nextLine();
+
+                employee = empMgr.searchNumber(id);
+
+                if (employee == null) {
+                    System.out.println("존재하지 않는 아이디입니다. 다시입력해주세요");
+                } else
+                    break;
+            }
+
+            while (true) {
+                System.out.print("PWD: ");
+                String pwd = sc.nextLine();
+
+                if (pwd.equals(employee.getPassword())) {
+                    char rank = employee.getNumber().charAt(0);
+                    if (rank == '0') emp.employeePage(); // 직원 페이지
+                    else if (rank == '1') {
+                        boolean loop = true;
+                        while (loop) {
+                            System.out.println("1. 직원");
+                            System.out.println("2. 사원 관리자");
+                            System.out.println("9. 메인으로 돌아가기");
+                            System.out.print(">> ");
+
+                            int choice = sc.nextInt();
+                            sc.nextLine();
+
+                            switch (choice) {
+                                case 1: // 직원 로그인
+                                    emp.employeePage();
+                                    break;
+                                case 2: // 사원 관리자 로그인
+                                    mgr.EmployeeManagerMenu();
+                                    break;
+                                case 9:
+                                    loop = false;
+                                    break;
+                                default:
+                                    System.out.println("잘못 입력하셨습니다. 다시 입력해주세요.");
+                            }
+                        }
+                    } else if (rank == '2') {
+                        boolean loop = true;
+                        while (loop) {
+                            System.out.println("1. 직원");
+                            System.out.println("2. 간식 관리자");
+                            System.out.println("9. 메인으로 돌아가기");
+
+                            System.out.print(">> ");
+
+                            int choice = sc.nextInt();
+                            sc.nextLine();
+
+                            switch (choice) {
+                                case 1: // 직원 로그인
+                                    emp.employeePage();
+                                    break;
+                                case 2: // 사원 관리자 로그인
+                                    snackPage.SanckManagerMenu();
+                                    break;
+                                case 9:
+                                    loop = false;
+                                    break;
+                                default:
+                                    System.out.println("잘못 입력하셨습니다. 다시 입력해주세요.");
+                            }
+                        }
+                    }
+                    break;
+                } else {
+                    System.out.println("비밀번호를 잘못 입력하셨습니다. 다시 입력해주세요.");
+                }
+            }
+        }
+    }
+
+
+    public void mainMenu2() {
         // 로그인 하기
         System.out.println("Together Inc. 홈페이지에 오신것을 환영합니다.");
         while (true) {
