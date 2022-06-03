@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class ManagerPage {
     Scanner sc = new Scanner(System.in);
+
     // 3. 사원 관리자 메뉴
     public void EmployeeManagerMenu() {
         System.out.println("======================================");
@@ -47,6 +48,7 @@ public class ManagerPage {
                 System.out.println("잘못 입력했습니다.\n 다시 입력하세요.");
         } // end switch
     }
+
     // ------ 메서드--------//
     // 문자열 입력 받기
     private String inputStr(String msg) {
