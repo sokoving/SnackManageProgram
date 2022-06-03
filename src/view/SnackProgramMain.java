@@ -1,20 +1,22 @@
 package view;
 
-import snack.controller.SnackPantry;
 import snackRequest.controller.SnackRequest;
 
 import java.util.Scanner;
 
-public class SnackProgramMain {
+public class SnackProgamMain {
+
+    //    private SnackPantry pantry;
+    private SnackRequest request;
 
     private EmployeePage emp;
     private ManagerPage mgr;
+
     private SnackPage snackPage;
     private Scanner sc;
-    private SnackPantry pantry;
-    private SnackRequest request;
 
-    public SnackProgramMain() {
+    public SnackProgamMain() {
+//        pantry = new SnackPantry();
         sc = new Scanner(System.in);
         pantry = new SnackPantry();
         request = new SnackRequest(pantry);
@@ -39,13 +41,13 @@ public class SnackProgramMain {
             sc.nextLine();
 
             switch (choice) {
-                case 1: // 직원 로그인
+                case 1:
                     employeeLogin();
                     break;
-                case 2: // 사원 관리자 로그인
+                case 2:
                     empManagerLogin();
                     break;
-                case 3: // 간식 관리자 로그인
+                case 3:
                     snackManagerLogin();
                     break;
                 case 9:
@@ -58,7 +60,6 @@ public class SnackProgramMain {
         }
     }
 
-    // 직원 로그인
     private void employeeLogin() {
         System.out.println("=============== 직원 로그인 ===============");
         while (true) {
@@ -67,7 +68,7 @@ public class SnackProgramMain {
             System.out.print("PWD: ");
             String pwd = sc.nextLine();
             if (id.equals("id") && pwd.equals("pwd")) {
-                emp.employeePage(); // 직원 페이지
+                emp.employeePage();
                 break;
             }
             System.out.println("아이디/비밀번호를 잘못 입력하셨습니다. 다시 입력해주세요.");
@@ -75,26 +76,21 @@ public class SnackProgramMain {
 
     }
 
-    // 사원 관리자 로그인
     private void empManagerLogin() {
         System.out.println("============== 직원 관리자 로그인 ==============");
         while (true) {
-            mgr.EmployeeManagerMenu(); // 사원 관리자 페이지
-            break;
-
-/*            System.out.print("ID: ");
+            System.out.print("ID: ");
             String id = sc.nextLine();
             System.out.print("PWD: ");
             String pwd = sc.nextLine();
             if (id.equals("id") && pwd.equals("pwd")) {
-                mgr.EmployeeManagerMenu(); // 사원 관리자 페이지
+                mgr.EmployeeManagerMenu();
                 break;
-            }*/
-//            System.out.println("아이디/비밀번호를 잘못 입력하셨습니다. 다시 입력해주세요.");
+            }
+            System.out.println("아이디/비밀번호를 잘못 입력하셨습니다. 다시 입력해주세요.");
         }
     }
 
-    // 간식 관리자 로그인
     private void snackManagerLogin() {
         System.out.println("============== 간식 관리자 로그인 ==============");
         while (true) {
@@ -103,10 +99,18 @@ public class SnackProgramMain {
             System.out.print("PWD: ");
             String pwd = sc.nextLine();
             if (id.equals("id") && pwd.equals("pwd")) {
-                snackPage.SanckManagerMenu(); // 간식 관리자 페이지
+                snackPage.SanckManagerMenu();
                 break;
             }
             System.out.println("아이디/비밀번호를 잘못 입력하셨습니다. 다시 입력해주세요.");
         }
     }
+
+    private void empMgrPage() {
+
+    }
+
+    private void snackMgrPage() {
+    }
+
 }
