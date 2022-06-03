@@ -1,5 +1,8 @@
 package view;
 
+import snack.controller.SnackPantry;
+import snackRequest.controller.SnackRequest;
+
 import java.util.Scanner;
 
 public class SnackProgramMain {
@@ -8,12 +11,17 @@ public class SnackProgramMain {
     private ManagerPage mgr;
     private SnackPage snackPage;
     private Scanner sc;
+    private SnackPantry pantry;
+    private SnackRequest request;
 
     public SnackProgramMain() {
         sc = new Scanner(System.in);
-        emp = new EmployeePage();
+        pantry = new SnackPantry();
+        request = new SnackRequest(pantry);
+        emp = new EmployeePage(pantry, request);
         mgr = new ManagerPage();
-        snackPage = new SnackPage();
+        snackPage = new SnackPage(pantry, request);
+
     }
 
     public void mainMenu() {

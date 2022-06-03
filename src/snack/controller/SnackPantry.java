@@ -16,6 +16,16 @@ public class SnackPantry {
 
     private int count;
 
+    private int money;
+
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
     public SnackPantry() {
         snacks = new Snack[SIZE];
         count = 4;
@@ -34,8 +44,8 @@ public class SnackPantry {
     }
 
     // 간식 탕비실에 추가하기
-    public void add(String snack) {
-        snacks[count++] = new Snack(snack, 1000, 10);
+    public void add(String snack, int price) {
+        snacks[count++] = new Snack(snack, price, 10);
 //        printSnackPantry();
     }
 

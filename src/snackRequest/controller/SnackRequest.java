@@ -8,6 +8,7 @@ import view.EmployeePage;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 
 public class SnackRequest {
@@ -18,9 +19,9 @@ public class SnackRequest {
     private SnackPantry pantry; /////////////////// SnackPantry 생성 /////////////////////
     private static final int MAX_REQUEST = 10;
 
-    public SnackRequest() {
+    public SnackRequest(SnackPantry pantry) {
         requests = new String[MAX_REQUEST];
-        pantry = new SnackPantry();
+        this.pantry = pantry;
         requests[0] = "ace";
         requests[1] = "ace";
         requests[2] = "chocolate";
@@ -44,7 +45,13 @@ public class SnackRequest {
     }
 
     // 간식 신청 마감, 가장 많이 신청된 간식 추가
-    public void closeRequest() {
+    public int closeRequest() {
+
+        System.out.print("과자 가격: ");
+        Scanner sc = new Scanner(System.in);
+        int price = sc.nextInt();
+        sc.nextLine();
+
         // 간식 이름과 신청수 매칭해서 넣어주는 맵
         Map<String, Integer> map = new HashMap();
         for (String request : requests) {
@@ -63,7 +70,11 @@ public class SnackRequest {
         }
 
         // empty가 아닐 경우에 탕비실에 추가
-        if (!select.isEmpty()) pantry.add(select);
+        if (!select.isEmpty()) pantry.add(select, price);
+
+        requests = new String[MAX_REQUEST];
+
+        return price * 10;
 
     }
 

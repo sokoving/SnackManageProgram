@@ -13,10 +13,10 @@ public class EmployeePage {
     private SnackPantry pantry;
     private SnackRequest request; /////////////////// SnackRequest 생성 /////////////////////
 
-    public EmployeePage() {
+    public EmployeePage(SnackPantry pantry, SnackRequest request) {
         sc = new Scanner(System.in);
-        request = new SnackRequest();
-        pantry = request.getPantry();
+        this.request = request;
+        this.pantry = pantry;
     }
 
     public void employeePage() {
@@ -77,17 +77,29 @@ public class EmployeePage {
         System.out.println("================= 간식 구입 ================");
         System.out.print("구입할 간식 이름: ");
         String purchase = sc.nextLine();
-        System.out.print("구입할 간식 개수: ");
-        int amount = sc.nextInt();
-        sc.nextLine();
+
 
         Snack[] list = pantry.getSnacks();
-        for (Snack snack : list) {
-            if (snack == null) break;
-            // 구입한 간식 개수 만큼 재고에서 빼주기
-            if (snack.getName().equals(purchase)) {
-                snack.setStock(snack.getStock() - amount);
-                break;
+        boolean loop = true;
+        int amount = 0;
+        while (loop) {
+            System.out.print("구입할 간식 개수: ");
+            amount = sc.nextInt();
+            sc.nextLine();
+            for (Snack snack : list) {
+                if (snack == null) break;
+                if (snack.getStock() - amount < 0) {
+                    System.out.println("구입할 간식 개수가 재고보다 많습니다.");
+                    System.out.printf("재고 : %d / 입력: %d\n", snack.getStock(), amount);
+                    break;
+                }
+                // 구입한 간식 개수 만큼 재고에서 빼주기
+                if (snack.getName().equals(purchase)) {
+                    snack.setStock(snack.getStock() - amount);
+                    pantry.setMoney(pantry.getMoney() + snack.getPrice() * amount);
+                    loop = false;
+                    break;
+                }
             }
         }
         System.out.printf("%s을(를) %d개 구매하셨습니다.\n", purchase, amount);

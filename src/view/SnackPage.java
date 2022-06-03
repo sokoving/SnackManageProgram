@@ -1,10 +1,22 @@
 package view;
 
 
+import snack.controller.SnackPantry;
+import snackRequest.controller.SnackRequest;
+
 import java.util.Scanner;
 
 public class SnackPage {
     Scanner sc = new Scanner(System.in);
+
+    SnackPantry pantry;
+    SnackRequest request;
+    int budget = 100000;
+
+    public SnackPage(SnackPantry pantry, SnackRequest request) {
+        this.pantry = pantry;
+        this.request = request;
+    }
 
     // 2. 간식 관리자 메뉴
     public void SanckManagerMenu() {
@@ -29,16 +41,22 @@ public class SnackPage {
 //                todo) 간식 요청서(다른 직원이 올린 것 포함)를 출력하는 메서드(직원 4번과 동일)
                 break;
             case 3:
+            case 4:
                 // 신청서 정산
 //                todo) 간식 요청서를 합산하는 메서드(수정 필요)
-                break;
-            case 4:
                 // 간식 구입
                 // todo) 간식을 구입한 결과를 출려하느 메서드(수정 필요)
+
+                int money = request.closeRequest();
+                budget -= money;
+                budget += pantry.getMoney();
+                pantry.setMoney(0);
+                System.out.println(budget);
                 break;
             case 5:
                 // 간식 계좌 관리
                 // todo) 간식관리자가 관리가 필요한가?(수정 필요)
+                System.out.println("잔고: " + budget);
                 break;
             case 9:
                 // 메인으로 돌아가기
