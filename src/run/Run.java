@@ -1,12 +1,12 @@
 package run;
 
 
-import view.SnackProgamMain;
+import view.SnackProgramMain;
 
 public class Run {
     public static void main(String[] args) {
 
-        SnackProgamMain login = new SnackProgamMain();
+        SnackProgramMain login = new SnackProgramMain();
         login.mainMenu();
 
 //        new SnackProgramMain();
