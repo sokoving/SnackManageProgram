@@ -2,6 +2,7 @@ package view;
 
 
 import snack.controller.SnackPantry;
+import snack.model.vo.Snack;
 import snackRequest.controller.SnackRequest;
 
 import java.util.Scanner;
@@ -24,10 +25,10 @@ public class SnackPage {
             System.out.println("======================================");
             System.out.println("# 간식관리자의 페이지입니다.");
             System.out.println("1. 재고 조회");
-            System.out.println("2. 신청서 조회");
-            System.out.println("3. 신청서 합산");
+            System.out.println("2. 간식 신청서 조회");
+            System.out.println("3. 간식 신청서 정산");
             System.out.println("4. 간식 구입");
-            System.out.println("5. 간식 계좌 관리");
+            System.out.println("5. 간식 계좌 잔액 조회");
             System.out.println("9. 메인으로 돌아가기");
 
             String menu = inputStr("\n메뉴 번호: ");
@@ -40,27 +41,22 @@ public class SnackPage {
                     pantry.printSnackPantry();
                     break;
                 case 2:
-                    // 신청서 조회
+                    // 간식 신청서 조회
                     System.out.println("\n # 직원들의 과자 요청서를 조회합니다.");
                     System.out.println("============================================");
                     request.printRequests();
                     break;
                 case 3:
-                case 4:
-                    // 신청서 정산
-    //                todo) 간식 요청서를 합산하는 메서드(수정 필요)
-                    // 간식 구입
-                    // todo) 간식을 구입한 결과를 출려하느 메서드(수정 필요)
-
-                    int money = request.closeRequest();
-                    budget -= money;
-                    budget += pantry.getMoney();
-                    pantry.setMoney(0);
-                    System.out.println(budget);
+                    // 간식 신청서 정산 : 간식 요청서를 합산후 구입
+                    acceptRequest();
                     break;
+                case 4:
+                    // 간식 구입
+                    buySnack();
+                    break;
+
                 case 5:
-                    // 간식 계좌 관리
-                    // todo) 간식관리자가 관리가 필요한가?(수정 필요)
+                    // 간식 계좌 잔액 조회
                     System.out.println("잔고: " + budget);
                     break;
                 case 9:
@@ -72,6 +68,36 @@ public class SnackPage {
             } // end switch
         }
 
+    }
+
+
+
+    // case 4 간식 구입
+    private void buySnack() {
+        // 간식 이름, 가격, 수량을 입력받아 구매
+        System.out.println("간식비 잔고: " + budget);
+        String snackName = inputStr("간식 이름: ");
+        int snackPrice = inputInt("간식 가격: ");
+        int snackStock = inputInt("간식 수량: ");
+        // 예산이 가격 * 수량보다 적으면
+        // 팬트리에 그 스낵을 넣고
+        // 버젯에서 구입 금액을 뺀다
+        if ( budget >= snackPrice*snackStock){
+            budget -= snackPrice*snackStock;
+            pantry.add(snackName, snackPrice, snackStock);
+        } else {
+            System.out.println("간식비 잔고가 부족합니다.");
+        }
+    }
+
+    //    case 3 간식 신청서 정산 : 간식 요청서를 합산후 구입
+    private void acceptRequest() {
+        System.out.println("가장 많은 요청을 받은 품목을 자동 구입합니다.");
+        int money = request.closeRequest();
+        budget -= money;
+        budget += pantry.getMoney();
+        pantry.setMoney(0);
+        System.out.println(budget);
     }
 
     // ------ 메서드--------//

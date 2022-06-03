@@ -48,6 +48,11 @@ public class SnackPantry {
         snacks[count++] = new Snack(snack, price, 10);
 //        printSnackPantry();
     }
+    public void add(String snack, int price, int stock) {
+        snacks[count++] = new Snack(snack, price, stock);
+//        printSnackPantry();
+    }
+
 
     public Snack[] getSnacks() {
         return snacks;
