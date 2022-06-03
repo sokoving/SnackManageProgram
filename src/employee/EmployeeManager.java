@@ -52,6 +52,17 @@ public class EmployeeManager {
         return (index != -1) ? e[index] : null;
     }
 
+    public Employee searchEmail(String inputEmail) {
+        int index = -1;
+        for (int i = 0; i < existEmployee(); i++) {
+            if (inputEmail.equals(e[i].getEmail())) {
+                index = i;
+                break;
+            }
+        }
+        return (index != -1) ? e[index] : null;
+    }
+
     // 찾을 사원번호 값, 찾은 사원번호 인덱스 값, 못찾을시 -1 리턴
     private int findIndexByNumber(String id) {
         int index = -1;
@@ -95,10 +106,28 @@ public class EmployeeManager {
         return false;
     }
 
-    //회원의 이메일을 변경하는 메서드
+
+    //사원의 이메일을 변경하는 메서드
     public boolean updateEmail(String number, String newEmail) {
         if (checkNumber(number)) {
-            e[findIndexByNumber(number)].setPassword(newEmail);
+            e[findIndexByNumber(number)].setEmail(newEmail);
+            return true;
+        }
+        return false;
+    }
+
+    //사원의 부서를 변경하는 메서드
+    public boolean updateDepartment(String number, String newDepartment) {
+        if (checkNumber(number)) {
+            e[findIndexByNumber(number)].setDepartment(newDepartment);
+            return true;
+        }
+        return false;
+    }
+ // 사원의 직책을 변경하는 메서드
+    public boolean updatePosition(String number, String newPosition) {
+        if (checkNumber(number)) {
+            e[findIndexByNumber(number)].setPosition(newPosition);
             return true;
         }
         return false;

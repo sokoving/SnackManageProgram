@@ -22,6 +22,7 @@ public class SnackProgamMain {
         emp = new EmployeePage();
         mgr = new ManagerPage();
         snackPage = new SnackPage();
+
     }
 
     public void mainMenu() {
