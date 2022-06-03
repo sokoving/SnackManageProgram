@@ -79,15 +79,18 @@ public class SnackProgramMain {
     private void empManagerLogin() {
         System.out.println("============== 직원 관리자 로그인 ==============");
         while (true) {
-            System.out.print("ID: ");
+            mgr.EmployeeManagerMenu(); // 사원 관리자 페이지
+            break;
+
+/*            System.out.print("ID: ");
             String id = sc.nextLine();
             System.out.print("PWD: ");
             String pwd = sc.nextLine();
             if (id.equals("id") && pwd.equals("pwd")) {
                 mgr.EmployeeManagerMenu(); // 사원 관리자 페이지
                 break;
-            }
-            System.out.println("아이디/비밀번호를 잘못 입력하셨습니다. 다시 입력해주세요.");
+            }*/
+//            System.out.println("아이디/비밀번호를 잘못 입력하셨습니다. 다시 입력해주세요.");
         }
     }
 
