@@ -7,17 +7,21 @@ public class EmployeeManager {
     // 사원 정보 배열에 관리
     private Employee[] e = new Employee[SIZE];
 
+    private int budget = 0;
+
     // 이 회사의 직원은 10명 고정 상수 변수 SIZE
     public static final int SIZE = 10;
 
     //========= 생성자
     // 생성시 Employee 초기화
     public EmployeeManager() {
-        e[0] = new Employee("00000", "1234a", "김철수", "abc@naver.com", "영업", "과장",0);
-        e[1] = new Employee("00001", "1235b", "홍길동", "abe@naver.com", "관리","대리",0);
-        e[2] = new Employee("00002", "1236c", "김지우", "abf@naver.com", "총무","사원",0);
-        e[3] = new Employee("00003", "1237d", "윤이슬", "abq@naver.com", "인사","주임",0);
-        e[4] = new Employee("00004", "1238e", "송민호", "abx@naver.com", "영업","대리",0);
+        e[0] = new Employee("00000", "1234a", "김철수", "abc@naver.com", "영업", "과장", 0);
+        e[1] = new Employee("00001", "1235b", "홍길동", "abe@naver.com", "관리", "대리", 0);
+        e[2] = new Employee("00002", "1236c", "김지우", "abf@naver.com", "총무", "사원", 0);
+        e[3] = new Employee("00003", "1237d", "윤이슬", "abq@naver.com", "인사", "주임", 0);
+        e[4] = new Employee("00004", "1238e", "송민호", "abx@naver.com", "영업", "대리", 0);
+
+        budget = 1000000;
     }
 
     //=========== 메서드
@@ -36,7 +40,9 @@ public class EmployeeManager {
     // employee 배열 리턴
     public Employee[] printAll() {
         return e;
-    }    ;
+    }
+
+    ;
 
 
     // 직원 정보를 배열 e에 저장하는 메서드 (직원 채용시)
@@ -85,18 +91,20 @@ public class EmployeeManager {
                 nameArr[count++] = e[i];
             }
         }
-        Employee [] temp = new Employee[count];
+        Employee[] temp = new Employee[count];
         for (int j = 0; j < count; j++) {
             temp[j] = nameArr[j];
         }
         nameArr = temp;
         return nameArr;
     }
+
     //존재하는 사원번호인지 확인
     // 존재하는 사원이면 true 리턴, 아니면 false
     public boolean checkNumber(String inputNumber) {
         return findIndexByNumber(inputNumber) != -1;
     }
+
     //회원의 비밀번호를 변경하는 메서드
     public boolean updatePassword(String number, String newPassword) {
         if (checkNumber(number)) {
@@ -124,7 +132,8 @@ public class EmployeeManager {
         }
         return false;
     }
- // 사원의 직책을 변경하는 메서드
+
+    // 사원의 직책을 변경하는 메서드
     public boolean updatePosition(String number, String newPosition) {
         if (checkNumber(number)) {
             e[findIndexByNumber(number)].setPosition(newPosition);
@@ -140,17 +149,48 @@ public class EmployeeManager {
             e[i] = null;
         }
     }
+
     //사원 정보 삭제
     public boolean delete(String number) {
         int delIdx = findIndexByNumber(number); // 삭제할 인덱스
-        if(delIdx != -1) {
-            for (int i = delIdx; i < existEmployee()-1 ; i++) {
+        if (delIdx != -1) {
+            for (int i = delIdx; i < existEmployee() - 1; i++) {
                 e[i] = e[i + 1];
             }
-            e[existEmployee()-1] = null;
+            e[existEmployee() - 1] = null;
             return true;
         }
         return false;
+    }
+
+    // 간식비 일괄 지급 기능
+    // 사원 1명당 간식비 5만원 고정 일괄 지급
+    // 지급된 금액 만큼 budget에서 차감하기
+    public int groupPayment() {
+        int count = 0;
+        if (budget < existEmployee() * 50000) {
+            System.out.println("일괄 지급에 실패 하였습니다.");
+            return -1;
+        }
+        for (Employee employee : e) {
+            if (employee == null) {
+                employee.setAccount(50000);
+                count++;
+            }
+            this.budget -= count * 50000;
+        }
+
+
+        return budget;
+
+    }
+
+    public int getBudget() {
+        return this.budget;
+    }
+
+    public void setBudget(int money) {
+        this.budget = money;
     }
 
 

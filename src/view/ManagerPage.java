@@ -327,18 +327,13 @@ public class ManagerPage {
     //=======================================
     // 6번 메뉴 처리하기
     // 매달 예산 100만원 고정
-    // 사원관리자는 간식비 지급 하는 기능을 2가지 가지고 있따.
-    // 1. 일괄지급 (간식비 / 10 (회사 규모가 직원 최대 10명 이라고 가정 잔여 금액은 추가지급으로 소진))
+    // 사원관리자는 간식비 지급 하는 기능을 2가지와 조회하는 기능 총 3가지의 기능을 갖는다.
+    // 1. 일괄지급 (간식비는 5만원 고정)
     // 2. 추가 지급( 특정 직원에게 간식비를 추가로 보너스 개념으로 준다)
     // 3. 간식 경비 잔액
     public void sendMoney(){
-        Employee[] employees = e.printAll();
-        int money = 1000000; //budget;
-        int paid = money / e.existEmployee();
-        for (Employee em : employees) {
-            if(em == null) break;
-            em.setAccount(paid);
-        }
+//        int budget = e.getBudget(); // 예산 가지고 오기
+        
     };
 
 
