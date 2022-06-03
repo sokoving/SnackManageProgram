@@ -1,6 +1,9 @@
 package snackRequest.controller;
 
-import snackRequest.model.vo.Request;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class SnackRequest {
 
@@ -24,6 +27,23 @@ public class SnackRequest {
     }
 
     public void closeRequest() {
+
+        Map<String, Integer> map = new HashMap();
+        for (String request : requests) {
+            if (!map.containsKey(request)) map.put(request, 1);
+            else map.put(request, map.get(request) + 1);
+        }
+
+        String select = "";
+        int max = map.get(0);
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            if (entry.getValue() > max) {
+                max = entry.getValue();
+                select = entry.getKey();
+            }
+        }
+
+        if (!select.isEmpty()) add(select);
 
     }
 
