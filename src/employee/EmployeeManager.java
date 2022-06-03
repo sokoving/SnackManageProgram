@@ -1,13 +1,16 @@
 package employee;
 
 
+import java.util.Scanner;
+
 public class EmployeeManager {
+    Scanner sc = new Scanner(System.in);
     //===========필드
 
     // 사원 정보 배열에 관리
     private Employee[] e = new Employee[SIZE];
 
-    private int budget = 0;
+    private int budget ;
 
     // 이 회사의 직원은 10명 고정 상수 변수 SIZE
     public static final int SIZE = 10;
@@ -171,19 +174,70 @@ public class EmployeeManager {
         if (budget < existEmployee() * 50000) {
             System.out.println("일괄 지급에 실패 하였습니다.");
             return -1;
-        }
-        for (Employee employee : e) {
-            if (employee == null) {
+        } for (Employee employee : e) {
+            if (employee != null) {
                 employee.setAccount(50000);
                 count++;
             }
-            this.budget -= count * 50000;
+
         }
-
-
+        this.budget -= count * 50000;
+        System.out.println("지급 성공!! 전 직원에게 간식비 5만원을 지급 하였습니다.");
         return budget;
-
     }
+
+    // 간식비 특정 지급 기능
+    // 특정 사원 1명에게 입력한 만큼의 간식비 지급
+    public void payment(String id, int money) {
+        Employee bestEmployee = e[findIndexByNumber(id)];
+/*        System.out.println(budget);
+        System.out.println(money);
+        System.out.println(budget < money);
+        System.out.println(money >= 50000);*/
+        if(budget < money) {
+            System.out.println("간식비 예산을 초과한 금액 입니다. 예산을 확인해주세요.");
+        } else if (money >= 50000) {
+            System.out.println("월 일괄 지급 금액을 초과한 금액입니다. 정말 지급하시겠습니까? \n");
+            String answer = inputStr(">> Y : 지급 / N :지급취소 ");
+/*            System.out.println((answer.toUpperCase().charAt(0)));
+            System.out.println(findIndexByNumber(id));*/
+            switch (answer.toUpperCase().charAt(0)) {
+
+                case 'Y' : case 'ㅛ' :
+                  bestEmployee.setAccount(bestEmployee.getAccount()+money);
+                  // 특정 사원의 account 계좌 늘려주기
+                    budget -= money;
+                    System.out.printf("%s사원에게 간식비 지급을 완료하였습니다.", bestEmployee.getName());
+                    break;
+
+                case 'N': case 'ㅜ':
+                    System.out.println("\n- 간식비 지급을 취소합니다.");
+                    break;
+            }
+        }else {
+            bestEmployee.setAccount(bestEmployee.getAccount()+money);
+            budget -= money;
+            System.out.printf("%s사원에게 간식비 지급을 완료하였습니다.", bestEmployee.getName());
+        }
+    }
+
+    // 간식비 계좌인 budget을 출력
+    public void printSnackCost(){
+        System.out.println(budget);
+    }
+
+    private String inputStr(String msg) {
+        System.out.printf(msg);
+        return sc.next();
+    }
+
+    // 숫자 입력받기
+    private int inputInt(String msg) {
+        System.out.printf(msg);
+        return sc.nextInt();
+    }
+
+
 
     public int getBudget() {
         return this.budget;
@@ -192,6 +246,7 @@ public class EmployeeManager {
     public void setBudget(int money) {
         this.budget = money;
     }
+}
 
 
     //manageEmployee(id, password)  [직원 관리 위임받음]
@@ -205,4 +260,4 @@ public class EmployeeManager {
     //  delEmployee()
     //  3-4 간식비 각자 계좌에 돈을 넣기
 
-}
+
