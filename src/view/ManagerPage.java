@@ -21,7 +21,7 @@ public class ManagerPage {
             System.out.println("3. 직원 정보 수정");
             System.out.println("4. 입사 직원 처리");
             System.out.println("5. 퇴사 직원 처리");
-            System.out.println("6. 간식비 사원 각자 계좌에 돈을 넣기");
+            System.out.println("6. 간식비 관리");
             System.out.println("9. 로그아웃");
 
             String menu = inputStr("\n메뉴 번호: ");
@@ -333,9 +333,52 @@ public class ManagerPage {
     // 3. 간식 경비 잔액
     public void sendMoney(){
 //        int budget = e.getBudget(); // 예산 가지고 오기
-        
+        System.out.println("\n======= 간식비 관리 =======");
+        System.out.println("# 1. 간식비 전체지급(전사원)");
+        System.out.println("# 2. 간식비 특정지급(우수사원)");
+        System.out.println("# 3. 간식비예산 현재잔액 확인");
+        System.out.println("# 9. 메인으로 돌아가기");
+
+        int menu = inputInt("- 메뉴 입력: ");
+        switch (menu) {
+            case 1:
+                EmployeeGroupPayment();
+                break;
+            case 2:
+                specialPayment();
+                break;
+            case 3:
+                printBudget();
+                break;
+            case 9:
+                return;
+            default:
+                System.out.println("메뉴를 잘못 입력했습니다.");
+        }
     };
 
+    //6-1번 메뉴 처리
+
+   public void EmployeeGroupPayment() {
+             e.groupPayment();
+   }
+
+   //6-2번 메뉴 처리 특정 사원에게 간식비를 지급
+
+   public void specialPayment(){
+       System.out.println("===== 보너스 간식비를 지급 합니다.=====");
+       String specialEmployee = inputStr("- 보너스를 지급받을 사원번호를 입력하세요.\n");
+       int snackCost = inputInt("지급할 금액을 입력하세요.\n");
+
+       e.payment(specialEmployee,snackCost);
+
+   }
+
+   //6-3번 메뉴 처리 budget 조회
+    public void printBudget(){
+        System.out.println("예산을 보여줘");
+        e.printSnackCost();
+    }
 
 //========================================================================//
 
