@@ -3,6 +3,7 @@ package view;
 import employee.Employee;
 import employee.EmployeeManager;
 import snack.controller.SnackPantry;
+import snackManager.SnackManager;
 import snackRequest.controller.SnackRequest;
 
 import java.util.Scanner;
@@ -16,6 +17,7 @@ public class SnackProgramMain {
     private SnackPantry pantry;
     private SnackRequest request;
     private EmployeeManager empMgr;
+    private SnackManager snackMan;
 
     public SnackProgramMain() {
         sc = new Scanner(System.in);
@@ -23,7 +25,8 @@ public class SnackProgramMain {
         request = new SnackRequest(pantry);
         emp = new EmployeePage(pantry, request);
         mgr = new ManagerPage();
-        snackPage = new SnackPage(pantry, request);
+        snackMan = new SnackManager(pantry, request, snackPage);
+        snackPage = new SnackPage(pantry, request, snackMan);
         empMgr = new EmployeeManager();
     }
 
@@ -100,7 +103,7 @@ public class SnackProgramMain {
                             emp.employeePage();
                             break;
                         case 2: // 사원 관리자 페이지로 이동
-                            snackPage.SanckManagerMenu();
+                            snackPage.SnackManagerMenu();
                             break;
                         case 9: // 로그인 페이지로 돌아가기
                             loop = false;
