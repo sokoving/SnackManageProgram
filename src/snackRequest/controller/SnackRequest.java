@@ -22,16 +22,6 @@ public class SnackRequest {
     public SnackRequest(SnackPantry pantry) {
         requests = new String[MAX_REQUEST];
         this.pantry = pantry;
-        requests[0] = "ace";
-        requests[1] = "ace";
-        requests[2] = "chocolate";
-        requests[3] = "coffee";
-        requests[4] = "ace";
-        requests[5] = "coffee";
-        requests[6] = "juice";
-        requests[7] = "coffee";
-        requests[8] = "juice";
-        requests[9] = "coffee";
     }
 
     // 신청한 과자를 신청서 리스트에 추가하는 메서드
