@@ -9,9 +9,8 @@ import java.util.Scanner;
 public class ManagerPage {
     Scanner sc = new Scanner(System.in);
     private EmployeeManager e;
-
     public ManagerPage(EmployeeManager empMgr) {
-        e = empMgr;
+         e = empMgr;
     }
 
     // 3. 사원 관리자 메뉴
@@ -35,17 +34,17 @@ public class ManagerPage {
                     // 직원 정보 조회
                     searchEmployee();
 
-    //                todo) 특정 직원의 정보를 출력하는 메서드
+                    //                todo) 특정 직원의 정보를 출력하는 메서드
                     break;
                 case 2:
                     // 직원 전체 정보 조회
                     printAllEmployee();
-    //                todo) 전체 직원의 정보를 출력하는 메서드
+                    //                todo) 전체 직원의 정보를 출력하는 메서드
                     break;
                 case 3:
                     // 직원 정보 수정
                     updateEmployee();
-    //                todo) 직원의 정보를 수정한 결과를 출력하는 메서드
+                    //                todo) 직원의 정보를 수정한 결과를 출력하는 메서드
                     break;
                 case 4:
                     // 입사 직원 처리
@@ -93,7 +92,7 @@ public class ManagerPage {
                 searchName();
                 break;
             case 3:
-                // 이름 검색
+                // email 검색
                 searchEmail();
                 break;
             case 9:
@@ -122,7 +121,7 @@ public class ManagerPage {
         String targetName = inputStr("- 조회할 이름: ");
         Employee[] employees = e.searchName(targetName);
 
-        if ( employees.length > 0) {
+        if (employees.length > 0) {
             System.out.println("\n=========== 검색된 회원 정보 ============");
             for (Employee e : employees) {
                 System.out.println(e.inform());
@@ -137,7 +136,8 @@ public class ManagerPage {
 
         String targetEmail = inputStr("- 조회할 E-amil: ");
         Employee employee = e.searchEmail(targetEmail);
-        System.out.println(employee);
+
+
         if (employee != null) {
             System.out.println("\n=========== 검색된 회원 정보 ============");
             System.out.println(employee.inform());
@@ -148,68 +148,79 @@ public class ManagerPage {
 
     // 메뉴 2번 처리
 
-    private void printAllEmployee(){
+    private void printAllEmployee() {
         Employee[] employees = e.printAll();
         for (Employee employee : employees) {
-            if(employee == null) return;
+            if (employee == null) return;
             System.out.println(employee.inform());
         }
     }
 
     //=========================================================
 
-// 메뉴 3번 처리
-  private void updateEmployee(){
+    // 메뉴 3번 처리
+    private void updateEmployee() {
 
-      System.out.println("\n======= 회원 정보 수정 =======");
-      System.out.println("# 1. 비밀번호 수정하기");
-      System.out.println("# 2. 이메일 수정하기");
-      System.out.println("# 3. 부서 수정하기");
-      System.out.println("# 4. 직책 수정하기");
-      System.out.println("# 9. 메인으로 돌아가기");
+        System.out.println("\n======= 회원 정보 수정 =======");
+        System.out.println("# 1. 비밀번호 수정하기");
+        System.out.println("# 2. 이메일 수정하기");
+        System.out.println("# 3. 부서 수정하기");
+        System.out.println("# 4. 직책 수정하기");
+        System.out.println("# 9. 메인으로 돌아가기");
 
-      int menu = inputInt("- 메뉴 입력: ");
-      switch (menu) {
-          case 1:
-              // 비밀번호 수정
-              updatePassword();
-              break;
-          case 2:
-              // 이메일 수정
-              updateEmail();
-              break;
-          case 3:
-              // 부서 수정
-              updateDepartment();
-              break;
-          case 4:
-              // 직책 수정
-              updatePosition();
-              break;
-          case 9:
-              return;
-          default:
-              System.out.println("메뉴를 잘못 입력했습니다.");
-      }
-  }
+        int menu = inputInt("- 메뉴 입력: ");
+        switch (menu) {
+            case 1:
+                // 비밀번호 수정
+                updatePassword();
+                break;
+            case 2:
+                // 이메일 수정
+                updateEmail();
+                break;
+            case 3:
+                // 부서 수정
+                updateDepartment();
+                break;
+            case 4:
+                // 직책 수정
+                updatePosition();
+                break;
+            case 9:
+                return;
+            default:
+                System.out.println("메뉴를 잘못 입력했습니다.");
+        }
+    }
 
-  // 3-1 updatePassword
-    private void updatePassword(){
+    // 3-1 updatePassword
+    private void updatePassword() {
         String id = inputStr("- 사원번호: ");
-        // 원래 비밀번호
-        String oldPw = e.searchNumber(id).getPassword();
+        if (e.searchNumber(id) == null) {
+            System.out.println("존재하지 않는 사원 입니다. 사원번호를 확인해주세요.");
+            return;
+        }
+
         String newPw = inputStr("- 새로운 비밀번호 ");
+        System.out.println(newPw.length() > 9 && newPw.length() <= 6);
+        if (newPw.length() != 5) {
+            System.out.println("\n password 수정 실패!");
+            System.out.println("password는 5~8자리로 설정해주세요.");
+            return;
+        }
 
         if (e.updatePassword(id, newPw)) {
             System.out.println("\n비밀번호 수정 완료!");
-        } else {
-            System.out.println("\n수정 실패!");
         }
     }
 
     // 3-2 updateEmail
     private void updateEmail() {
         String id = inputStr("- 사원번호: ");
+        if (e.searchNumber(id) == null) {
+            System.out.println("존재하지 않는 사원 입니다. 사원번호를 확인해주세요.");
+            return;
+        }
         String newEmail = inputStr("- 새로운 이메일: ");
 
         if (e.updateEmail(id, newEmail)) {
@@ -221,25 +232,33 @@ public class ManagerPage {
     }
     // 3-3 updateDepartment
 
-    private void updateDepartment(){
+    private void updateDepartment() {
         String id = inputStr("- 사원번호 :");
+        if (e.searchNumber(id) == null) {
+            System.out.println("존재하지 않는 사원 입니다. 사원번호를 확인해주세요.");
+            return;
+        }
         String newDepartment = inputStr("- 변경된 부서 :");
 
-        if(e.updateDepartment(id, newDepartment)) {
+        if (e.updateDepartment(id, newDepartment)) {
             System.out.println("\n이동된 부서로 수정 완료!");
-        } else{
+        } else {
             System.out.println("\n 수정실패!");
         }
     }
     // 3-4 updatePosition
 
-    private void updatePosition(){
+    private void updatePosition() {
         String id = inputStr("- 사원번호 :");
+        if (e.searchNumber(id) == null) {
+            System.out.println("존재하지 않는 사원 입니다. 사원번호를 확인해주세요.");
+            return;
+        }
         String newDepartment = inputStr("- 변경된 직책 :");
 
-        if(e.updateDepartment(id, newDepartment)) {
+        if (e.updateDepartment(id, newDepartment)) {
             System.out.println("\n직책 수정 완료!");
-        } else{
+        } else {
             System.out.println("\n 수정실패!");
         }
     }
@@ -247,28 +266,54 @@ public class ManagerPage {
     //=========================================
 
     //4번 메뉴 처리 insertEmployee
-    private void insertEmployee(){
+    private void insertEmployee() {
 
-            System.out.println("\n# 사원 정보를 등록합니다.");
 
-            String id = null;
-            while (true) {
-                id = inputStr("- 사원번호: ");
-                if (!e.checkNumber(id)) break;
-                System.out.println("- 중복된 사원번호 입니다.!");
-            }
-            String name = inputStr("- 사원이름: ");
-            String password = inputStr("- 비밀번호: ");
-            String email = inputStr("- 이메일: ");
-            String department = inputStr("- 부서: ");
-            String position = inputStr("- 직책: ");
-            int account = 0;
+        System.out.println("\n# 사원 정보를 등록합니다.");
 
-            e.insertEmployee(id, name, password, email, department, position,account);
-            System.out.println("\n# 사원등록 성공!");
+        String id = null;
+        String name = null;
+        String password = null;
+        Employee[] employees = e.printAll();
+        String lastEmployeeNumber = employees[e.existEmployee() - 1].getNumber();
+
+        while (true) {
+            //사원번호 중복검사
+            System.out.printf("현재 등록된 마지막 사원번호는 %s번 입니다. %s의 다음 번호를 입력하세요.\n", lastEmployeeNumber,lastEmployeeNumber);
+            id = inputStr("- 등록할 사원번호: ");
+            if (e.checkNumber(id))
+                System.out.println("- 중복된 사원번호 입니다!");
+
+            //사원번호 순차적 관리를 위한 필터링
+            if (Integer.parseInt(lastEmployeeNumber) + 1 == Integer.parseInt(id)) break;
+            System.out.println("마지막 등록된 사원번호부터 순차적으로 사원번호를 등록해주세요. 사원번호는 5자리 입니다.\n");
+
+
+        }
+        while (true) {
+            System.out.println("이름은 성 포함2 ~ 4글자로 입력해주세요. 실제 이름이 5글자인 경우 관리팀에 문의 바랍니다.");
+            name = inputStr("- 사원이름: ");
+            if (name.length() < 5 && name.length() >= 2) break;
         }
 
-  // 메뉴 5번 처리 deleteEmployee
+
+        while (true) {
+            System.out.println("password는 5자리로 설정해주세요.");
+            password = inputStr("- 비밀번호: ");
+            if (password.length() == 5) break;
+            System.out.println("password는 5자리로 설정해주세요.");
+        }
+
+        String email = inputStr("- 이메일: ");
+        String department = inputStr("- 부서: ");
+        String position = inputStr("- 직책: ");
+        int account = 0;
+
+        e.insertEmployee(id, name, password, email, department, position, account);
+        System.out.println("\n# 사원등록 성공!");
+    }
+
+    // 메뉴 5번 처리 deleteEmployee
     private void deleteEmployee() {
         System.out.println("\n======= 사원 정보 삭제 =======");
         System.out.println("# 1. 특정 사원 삭제하기");
@@ -296,20 +341,23 @@ public class ManagerPage {
         String targetId = inputStr("\n# 삭제 대상 아이디:");
 
         if (e.checkNumber(targetId)) {
-            System.out.println("\n# 회원 정보가 삭제됩니다. [Y/N]");
+            System.out.printf("\n# %s의 사원 정보가 삭제됩니다. [Y/N]", e.searchNumber(targetId).getName());
             String answer = inputStr(">> ");
 
             switch (answer.toUpperCase().charAt(0)) {
-                case 'Y': case 'ㅛ':
+                case 'Y':
+                case 'ㅛ':
+                    System.out.println("\n- 사원번호 : "+targetId+"(" + e.searchNumber(targetId).getName()+ ") 의 정보가 삭제 되었습니다.\n");
                     e.delete(targetId);
-                    System.out.printf("\n- [%s]사원의 데이터가 삭제되었습니다.\n", targetId);
                     break;
-                case 'N': case 'ㅜ':
+                case 'N':
+                case 'ㅜ':
                     System.out.println("\n- 삭제를 취소합니다.");
                     break;
             }
 
         }
+        else{System.out.printf("\n%s는 존재하지 않는 사원 번호 입니다.\n", targetId);}
     }
 
     private void deleteAll() {
@@ -318,11 +366,13 @@ public class ManagerPage {
         String answer = inputStr(">> ");
 
         switch (answer.toUpperCase().charAt(0)) {
-            case 'Y': case 'ㅛ':
+            case 'Y':
+            case 'ㅛ':
                 e.delete();
                 System.out.println("\n- 모든 데이터가 삭제되었습니다.");
                 break;
-            case 'N': case 'ㅜ':
+            case 'N':
+            case 'ㅜ':
                 System.out.println("\n- 삭제를 취소합니다.");
                 break;
         }
@@ -335,7 +385,7 @@ public class ManagerPage {
     // 1. 일괄지급 (간식비는 5만원 고정)
     // 2. 추가 지급( 특정 직원에게 간식비를 추가로 보너스 개념으로 준다)
     // 3. 간식 경비 잔액
-    public void sendMoney(){
+    public void sendMoney() {
 //        int budget = e.getBudget(); // 예산 가지고 오기
         System.out.println("\n======= 간식비 관리 =======");
         System.out.println("# 1. 간식비 전체지급(전사원)");
@@ -359,29 +409,30 @@ public class ManagerPage {
             default:
                 System.out.println("메뉴를 잘못 입력했습니다.");
         }
-    };
+    }
+
+    ;
 
     //6-1번 메뉴 처리
 
-   public void EmployeeGroupPayment() {
-             e.groupPayment();
-   }
+    public void EmployeeGroupPayment() {
+        e.groupPayment();
+    }
 
-   //6-2번 메뉴 처리 특정 사원에게 간식비를 지급
+    //6-2번 메뉴 처리 특정 사원에게 간식비를 지급
 
-   public void specialPayment(){
-       System.out.println("===== 보너스 간식비를 지급 합니다.=====");
-       String specialEmployee = inputStr("- 보너스를 지급받을 사원번호를 입력하세요.\n");
-       int snackCost = inputInt("지급할 금액을 입력하세요.\n");
+    public void specialPayment() {
+        System.out.println("===== 보너스 간식비를 지급 합니다.=====");
+        String specialEmployee = inputStr("- 보너스를 지급받을 사원번호를 입력하세요. :");
+        int snackCost = inputInt("지급할 금액을 입력하세요.\n");
 
-       e.payment(specialEmployee,snackCost);
+        e.payment(specialEmployee, snackCost);
 
-   }
+    }
 
-   //6-3번 메뉴 처리 budget 조회
-    public void printBudget(){
-        System.out.println("예산을 보여줘");
-        e.printSnackCost();
+    //6-3번 메뉴 처리 budget 조회
+    public void printBudget() {
+        System.out.printf("=======현재 남은 간식비는 %d 입니다.=======\n\n", e.printSnackCost());
     }
 
 //========================================================================//
