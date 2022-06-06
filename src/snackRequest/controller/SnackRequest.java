@@ -62,8 +62,6 @@ public class SnackRequest {
         // empty가 아닐 경우에 탕비실에 추가
         if (!select.isEmpty()) pantry.add(select, price);
 
-        requests = new String[MAX_REQUEST];
-
         return price * 10;
 
     }
@@ -77,5 +75,28 @@ public class SnackRequest {
 
     public SnackPantry getPantry() {
         return pantry;
+    }
+
+    // 신청서를 리셋하는 메서드
+    public void resetRequest() {
+        requests = new String[MAX_REQUEST];
+        numRequests = 0;
+    }
+
+    // 이름의 개수를 리턴하는 메서드
+    public int searchByName(String name) {
+        int num = 0;
+        for (String request : requests) {
+            if (name.equals(request)) num++;
+        }
+        return num;
+    }
+
+    public int getNumRequests() {
+        return numRequests;
+    }
+
+    public void setNumRequests(int numRequests) {
+        this.numRequests = numRequests;
     }
 }
