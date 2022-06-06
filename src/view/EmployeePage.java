@@ -1,5 +1,7 @@
 package view;
 
+import employee.Employee;
+import employee.EmployeeManager;
 import snack.controller.SnackPantry;
 import snack.model.vo.Snack;
 import snackRequest.controller.SnackRequest;
@@ -13,6 +15,7 @@ public class EmployeePage {
     private SnackPantry pantry;
     private SnackRequest request;
 
+    private int money;
     public EmployeePage(SnackPantry pantry, SnackRequest request) {
         sc = new Scanner(System.in);
         this.request = request;
@@ -20,7 +23,7 @@ public class EmployeePage {
     }
 
     // 직원 메인 페이지
-    public void employeePage() {
+    public void employeePage(Employee employee) {
         boolean loop = true;
         while (loop) { // 직원 메인 페이지
             System.out.println("=============== 직원 페이지 ===============");
@@ -39,10 +42,10 @@ public class EmployeePage {
                     viewSnackStock();
                     break;
                 case 2: // 간식비 계좌 조회
-                    viewSnackAccount();
+                    viewSnackAccount(employee);
                     break;
                 case 3: // 간식 구입
-                    purchaseSnack();
+                    purchaseSnack(employee);
                     break;
                 case 4: // 간식 요청
                     requestSnack();
@@ -65,13 +68,13 @@ public class EmployeePage {
     }
 
     // 간식비 계좌 조회
-    private void viewSnackAccount() {
+    private void viewSnackAccount(Employee emplyee) {
         System.out.println("============= 간식비 계좌 조회 =============");
-
+        System.out.println("간식비 잔고: " + emplyee.getAccount());
     }
 
     // 간식 구입
-    private void purchaseSnack() {
+    private void purchaseSnack(Employee employee) {
         System.out.println("================= 간식 구입 ================");
         System.out.print("구입할 간식 이름: ");
         String purchase = sc.nextLine();
@@ -94,11 +97,17 @@ public class EmployeePage {
                         System.out.println("구입할 간식 개수가 재고보다 많습니다.");
                         System.out.printf("재고 : %d / 입력: %d\n", snack.getStock(), amount);
                         break; // break for loop
+                    } else if (employee.getAccount() < amount * snack.getPrice()) { // 구입하는 간식 비용이 간식비 잔고보다 많을 경우, 실패
+                        System.out.println("잔고가 부족합니다.");
+                        System.out.printf("총 가격: %d / 간식비 잔고: %d\n", amount * snack.getPrice(), employee.getAccount());
+                        break;
                     }
                     // 구매한 개수만큼 재고에서 빼주기
                     snack.setStock(snack.getStock() - amount);
                     // 직원이 낸 돈 만큼 탕비실 돈통에 돈이 쌓임
                     pantry.setMoney(pantry.getMoney() + snack.getPrice() * amount);
+                    // 직원이 낸 돈 만큼 본인 간식 잔고에서 빼기
+                    employee.setAccount(employee.getAccount() - snack.getPrice() * amount);
                     loop = false;
                     break;
                 }
