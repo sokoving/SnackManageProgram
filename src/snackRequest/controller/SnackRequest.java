@@ -15,6 +15,8 @@ public class SnackRequest {
 
     //    private Request[] requests;
     private String[] requests;
+
+
     private int numRequests;
     private SnackPantry pantry; /////////////////// SnackPantry 생성 /////////////////////
     private static final int MAX_REQUEST = 10;
@@ -32,6 +34,10 @@ public class SnackRequest {
         requests[7] = "coffee";
         requests[8] = "juice";
         requests[9] = "coffee";
+
+        numRequests = 10;
+
+
     }
 
     // 신청한 과자를 신청서 리스트에 추가하는 메서드
@@ -45,7 +51,7 @@ public class SnackRequest {
     }
 
     // 간식 신청 마감, 가장 많이 신청된 간식 추가
-    public int closeRequest() {
+        public int closeRequest() {
 
         System.out.print("과자 가격: ");
         Scanner sc = new Scanner(System.in);
@@ -72,10 +78,25 @@ public class SnackRequest {
         // empty가 아닐 경우에 탕비실에 추가
         if (!select.isEmpty()) pantry.add(select, price);
 
-        requests = new String[MAX_REQUEST];
+
 
         return price * 10;
 
+    }
+
+    // 신청서를 리셋하는 메서드
+    public void resetRequest(){
+        requests = new String[MAX_REQUEST];
+        numRequests = 0;
+    }
+
+    // 이름의 개수를 리턴하는 메서드
+    public int searchByName(String name){
+        int num = 0;
+        for (String request : requests) {
+            if(name.equals(request)) num++;
+        }
+        return num;
     }
 
     // 신청서 출력
@@ -88,4 +109,13 @@ public class SnackRequest {
     public SnackPantry getPantry() {
         return pantry;
     }
+
+    public int getNumRequests() {
+        return numRequests;
+    }
+
+    public void setNumRequests(int numRequests) {
+        this.numRequests = numRequests;
+    }
+
 }

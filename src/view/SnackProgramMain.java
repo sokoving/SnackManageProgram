@@ -3,7 +3,6 @@ package view;
 import employee.Employee;
 import employee.EmployeeManager;
 import snack.controller.SnackPantry;
-import snackManager.SnackManager;
 import snackRequest.controller.SnackRequest;
 
 import java.util.Scanner;
@@ -17,7 +16,6 @@ public class SnackProgramMain {
     private SnackPantry pantry;
     private SnackRequest request;
     private EmployeeManager empMgr;
-    private SnackManager snackMan;
 
     public SnackProgramMain() {
         sc = new Scanner(System.in);
@@ -25,8 +23,7 @@ public class SnackProgramMain {
         request = new SnackRequest(pantry);
         emp = new EmployeePage(pantry, request);
         mgr = new ManagerPage();
-        snackMan = new SnackManager(pantry, request, snackPage);
-        snackPage = new SnackPage(pantry, request, snackMan);
+        snackPage = new SnackPage(pantry, request);
         empMgr = new EmployeeManager();
     }
 

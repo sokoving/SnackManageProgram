@@ -48,13 +48,43 @@ public class SnackPantry {
         snacks[count++] = new Snack(snack, price, 10);
 //        printSnackPantry();
     }
+
     public void add(String snack, int price, int stock) {
         snacks[count++] = new Snack(snack, price, stock);
 //        printSnackPantry();
     }
 
 
+    // 이름으로 인덱스 번호 찾기
+    public int findIndexByName(String name){
+        int snackIndex = -1;
+        for (int i = 0; i < count; i++) {
+            if(name.equals(snacks[i].getName())){
+             snackIndex = i;
+            }
+        }
+        return snackIndex;
+    }
+
+    // 인덱스 번호로 데이터 삭제하기
+    public Snack removeSnackById(int idx){
+        Snack dellSnack = snacks[idx];
+
+        for (int i = idx; i < count-1 ; i++) {
+            snacks[i] = snacks[i+1];
+        }
+        snacks[count-1] = null;
+        count--;
+
+        return dellSnack;
+
+    }
+
     public Snack[] getSnacks() {
         return snacks;
+    }
+
+    public int getCount() {
+        return count;
     }
 }
