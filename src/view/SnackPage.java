@@ -10,9 +10,9 @@ import java.util.Scanner;
 public class SnackPage {
     Scanner sc = new Scanner(System.in);
 
-    SnackPantry pantry;
-    SnackRequest request;
-    int budget = 100000;
+    private SnackPantry pantry;
+    private SnackRequest request;
+    private int budget = 100000;
 
     public SnackPage(SnackPantry pantry, SnackRequest request) {
         this.pantry = pantry;
@@ -42,11 +42,11 @@ public class SnackPage {
                     break;
                 case 3:
                     // 간식 구입
-                    buySnack();
+                    manualbuySnack();
                     break;
                 case 4:
                     // 간식비 관리
-//                    manageSnackBudget();
+                    manageSnackBudget();
                     break;
 
                 case 9:
@@ -60,7 +60,51 @@ public class SnackPage {
 
     }
 
-    //---------------- case1 2. 간식 신청서 관리 ----------------//
+
+    //---------------- case 4. 간식비 관리----------------//
+    private void manageSnackBudget() {
+        System.out.println("# 간식비를 관리하는 페이지입니다.");
+        System.out.println("간식비 잔액: " + budget);
+        System.out.println("탕비실 현금: " + pantry.getMoney());
+        System.out.println("탕비실의 현금을 회수하시겠습니까? [Y/N] ");
+        while (true) {
+            String answer = inputStr(" >> ");
+            switch (answer.toUpperCase().charAt(0)) {
+                case 'Y':
+                    System.out.println("회수 전 잔고 : " + budget);
+                    budget += pantry.getMoney();
+                    pantry.setMoney(0);
+                    System.out.println("회수 후 잔고 : " + budget);
+                    return;
+                case 'N':
+                    System.out.println("이전 페이지로 돌아갑니다.");
+                    return;
+                default:
+                    System.out.println("Y와 N 둘 중 하나를 입력해 주세요.");
+            }
+        }
+    }
+
+    //---------------- case 3. 간식 구입 ----------------//
+    private void manualbuySnack() {
+        System.out.println("# 간식을 구입하는 페이지입니다.");
+        System.out.println("# 구입을 계속하시겠습니까? [Y/N] ");
+        while (true) {
+            String answer = inputStr(" >> ");
+            switch (answer.toUpperCase().charAt(0)) {
+                case 'Y':
+                    buySnack();
+                    return;
+                case 'N':
+                    System.out.println("이전 페이지로 돌아갑니다.");
+                    return;
+                default:
+                    System.out.println("Y와 N 둘 중 하나를 입력해 주세요.");
+            }
+        }
+    }
+
+    //---------------- case 2. 간식 신청서 관리 ----------------//
     private void manageSnackRequest() {
         while (true) {
             System.out.println("# 간식 신청서 관리 페이지입니다.");
@@ -342,15 +386,6 @@ public class SnackPage {
 
     // ------ 메서드--------//
 
-    // 펜트리 돈을 가져오는 메서드
-    public void withdrawPantryMoney() {
-        System.out.println("회수 전 잔고 : " + budget);
-        budget += pantry.getMoney();
-        pantry.setMoney(0);
-        System.out.println("회수 후 잔고 : " + budget);
-
-    }
-
 
     //  간식 구매하는 메서드
     private void buySnack() {
@@ -361,7 +396,7 @@ public class SnackPage {
         int snackStock = inputInt("간식 수량: ");
         if (budget >= snackPrice * snackStock) {
             pantry.add(snackName, snackPrice, snackStock);
-            setBudget(budget - snackPrice * snackStock);
+            budget -= snackPrice * snackStock;
             System.out.printf("[구매] 간식 이름: %s / 간식 가격 : %d / 간식 재고: %d\n",
                     snackName, snackPrice, snackStock);
         } else {
@@ -369,14 +404,14 @@ public class SnackPage {
         }
     }
 
+    // 간식 가격과 수량을 입력받아 구매
     private void buySnackByPrice(String snackName) {
-        // 간식 가격을 입력받아 구매한 결과 출력
         System.out.println("간식비 잔고: " + budget);
         int snackPrice = inputInt("간식 가격: ");
         int snackStock = inputInt("간식 수량: ");
         if (budget >= snackPrice * snackStock) {
             pantry.add(snackName, snackPrice, snackStock);
-            setBudget(budget - snackPrice * snackStock);
+            budget -= snackPrice * snackStock;
             System.out.printf("[구매] 간식 이름: %s / 간식 가격 : %d / 간식 재고: %d\n",
                     snackName, snackPrice, snackStock);
         } else {
@@ -384,13 +419,6 @@ public class SnackPage {
         }
     }
 
-    public int getBudget() {
-        return budget;
-    }
-
-    public void setBudget(int budget) {
-        this.budget = budget;
-    }
 
     // 문자열 입력 받기
     private String inputStr(String msg) {
