@@ -10,7 +10,7 @@ public class EmployeeManager {
     // 사원 정보 배열에 관리
     private Employee[] e = new Employee[SIZE];
 
-    private int budget ;
+    private int budget; // 예산 필드
 
     // 이 회사의 직원은 10명 고정 상수 변수 SIZE
     public static final int SIZE = 10;
@@ -111,9 +111,10 @@ public class EmployeeManager {
     //회원의 비밀번호를 변경하는 메서드
     public boolean updatePassword(String number, String newPassword) {
         if (checkNumber(number)) {
-            e[findIndexByNumber(number)].setPassword(newPassword);
-            return true;
-        }
+                e[findIndexByNumber(number)].setPassword(newPassword);
+                return true;
+
+            }
         return false;
     }
 
@@ -170,11 +171,13 @@ public class EmployeeManager {
     // 사원 1명당 간식비 5만원 고정 일괄 지급
     // 지급된 금액 만큼 budget에서 차감하기
     public int groupPayment() {
+        System.out.printf("이번달 간식비를 총 %d명의의 직원에게 5만원씩 지급합니다.\n", existEmployee());
         int count = 0;
         if (budget < existEmployee() * 50000) {
-            System.out.println("일괄 지급에 실패 하였습니다.");
+            System.out.println("예산이 부족합니다! \n일괄 지급에 실패 하였습니다.");
             return -1;
-        } for (Employee employee : e) {
+        }
+        for (Employee employee : e) {
             if (employee != null) {
                 employee.setAccount(50000);
                 count++;
@@ -189,12 +192,15 @@ public class EmployeeManager {
     // 간식비 특정 지급 기능
     // 특정 사원 1명에게 입력한 만큼의 간식비 지급
     public void payment(String id, int money) {
+        if (findIndexByNumber(id) == -1) {
+            System.out.println("등록되지 않은 사원 입니다.");
+        }
         Employee bestEmployee = e[findIndexByNumber(id)];
 /*        System.out.println(budget);
         System.out.println(money);
         System.out.println(budget < money);
         System.out.println(money >= 50000);*/
-        if(budget < money) {
+        if (budget < money) {
             System.out.println("간식비 예산을 초과한 금액 입니다. 예산을 확인해주세요.");
         } else if (money >= 50000) {
             System.out.println("월 일괄 지급 금액을 초과한 금액입니다. 정말 지급하시겠습니까? \n");
@@ -203,27 +209,29 @@ public class EmployeeManager {
             System.out.println(findIndexByNumber(id));*/
             switch (answer.toUpperCase().charAt(0)) {
 
-                case 'Y' : case 'ㅛ' :
-                  bestEmployee.setAccount(bestEmployee.getAccount()+money);
-                  // 특정 사원의 account 계좌 늘려주기
+                case 'Y':
+                case 'ㅛ':
+                    bestEmployee.setAccount(bestEmployee.getAccount() + money);
+                    // 특정 사원의 account 계좌 늘려주기
                     budget -= money;
                     System.out.printf("%s사원에게 간식비 지급을 완료하였습니다.", bestEmployee.getName());
                     break;
 
-                case 'N': case 'ㅜ':
+                case 'N':
+                case 'ㅜ':
                     System.out.println("\n- 간식비 지급을 취소합니다.");
                     break;
             }
-        }else {
-            bestEmployee.setAccount(bestEmployee.getAccount()+money);
+        } else {
+            bestEmployee.setAccount(bestEmployee.getAccount() + money);
             budget -= money;
             System.out.printf("%s사원에게 간식비 지급을 완료하였습니다.", bestEmployee.getName());
         }
     }
 
     // 간식비 계좌인 budget을 출력
-    public void printSnackCost(){
-        System.out.println(budget);
+    public int printSnackCost() {
+        return budget;
     }
 
     private String inputStr(String msg) {
@@ -238,7 +246,6 @@ public class EmployeeManager {
     }
 
 
-
     public int getBudget() {
         return this.budget;
     }
@@ -249,15 +256,14 @@ public class EmployeeManager {
 }
 
 
-    //manageEmployee(id, password)  [직원 관리 위임받음]
-    //  3-1. 직원 정보 조회
-    //  printEmployee()
-    //  3-2 직원 전체 정보 조회
-    //  printAllEmployee()
-    //  3-2 직원 수정
-    //  updateEmployee()
-    //  3-3 직원 삭제
-    //  delEmployee()
-    //  3-4 간식비 각자 계좌에 돈을 넣기
+//manageEmployee(id, password)  [직원 관리 위임받음]
+//System.out.println("# 사원관리자의 페이지입니다.");
+//System.out.println("1. 직원 정보 조회"); searchEmployee();
+//System.out.println("2. 직원 전체 정보 조회"); printAllEmployee();
+//System.out.println("3. 직원 정보 수정"); updateEmployee();
+//System.out.println("4. 입사 직원 처리"); insertEmployee();
+//System.out.println("5. 퇴사 직원 처리"); deleteEmployee();
+//System.out.println("6. 간식비 관리"); sendMoney();
+//System.out.println("9. 로그아웃");
 
 
