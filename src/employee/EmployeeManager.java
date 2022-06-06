@@ -221,7 +221,7 @@ public class EmployeeManager {
         }else {
             bestEmployee.setAccount(bestEmployee.getAccount()+money);
             budget -= money;
-            System.out.printf("%s사원에게 간식비 지급을 완료하였습니다.", bestEmployee.getName());
+            System.out.printf("%s사원에게 간식비 지급을 완료하였습니다.\n", bestEmployee.getName());
         }
     }
 
