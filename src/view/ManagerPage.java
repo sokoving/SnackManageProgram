@@ -8,7 +8,10 @@ import java.util.Scanner;
 
 public class ManagerPage {
     Scanner sc = new Scanner(System.in);
-    private EmployeeManager e = new EmployeeManager();
+    private EmployeeManager e;
+    public ManagerPage(EmployeeManager empMgr) {
+         e = empMgr;
+    }
 
     // 3. 사원 관리자 메뉴
     public void EmployeeManagerMenu() {

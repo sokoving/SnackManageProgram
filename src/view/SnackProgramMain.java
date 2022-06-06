@@ -1,5 +1,6 @@
 package view;
 
+import employee.EmployeeManager;
 import snack.controller.SnackPantry;
 import snackRequest.controller.SnackRequest;
 
@@ -13,13 +14,15 @@ public class SnackProgramMain {
     private Scanner sc;
     private SnackPantry pantry;
     private SnackRequest request;
+    private EmployeeManager empMgr;
 
     public SnackProgramMain() {
         sc = new Scanner(System.in);
         pantry = new SnackPantry();
         request = new SnackRequest(pantry);
         emp = new EmployeePage(pantry, request);
-        mgr = new ManagerPage();
+        empMgr = new EmployeeManager();
+        mgr = new ManagerPage(empMgr);
         snackPage = new SnackPage(pantry, request);
 
     }
