@@ -68,9 +68,9 @@ public class EmployeePage {
     }
 
     // 간식비 계좌 조회
-    private void viewSnackAccount(Employee emplyee) {
+    private void viewSnackAccount(Employee employee) {
         System.out.println("============= 간식비 계좌 조회 =============");
-        System.out.println("간식비 잔고: " + emplyee.getAccount());
+        System.out.println("간식비 잔고: " + employee.getAccount());
     }
 
     // 간식 구입

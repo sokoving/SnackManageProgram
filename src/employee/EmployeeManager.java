@@ -18,7 +18,7 @@ public class EmployeeManager {
     //========= 생성자
     // 생성시 Employee 초기화
     public EmployeeManager() {
-        e[0] = new Employee("00000", "1234a", "김철수", "abc@naver.com", "영업", "과장", 100000);
+        e[0] = new Employee("00000", "1234a", "김철수", "abc@naver.com", "영업", "과장", 0);
         e[1] = new Employee("00001", "1235b", "홍길동", "abe@naver.com", "관리", "대리", 0);
         e[2] = new Employee("00002", "1236c", "김지우", "abf@naver.com", "총무", "사원", 0);
         e[3] = new Employee("00003", "1237d", "윤이슬", "abq@naver.com", "인사", "주임", 0);
@@ -221,7 +221,7 @@ public class EmployeeManager {
         }else {
             bestEmployee.setAccount(bestEmployee.getAccount()+money);
             budget -= money;
-            System.out.printf("%s사원에게 간식비 지급을 완료하였습니다.", bestEmployee.getName());
+            System.out.printf("%s사원에게 간식비 지급을 완료하였습니다.\n", bestEmployee.getName());
         }
     }
 

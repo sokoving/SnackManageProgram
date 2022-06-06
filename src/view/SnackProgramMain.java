@@ -16,7 +16,7 @@ public class SnackProgramMain {
     private SnackPantry pantry;
     private SnackRequest request;
     private EmployeeManager empMgr;
-    private Employee employee;
+//    private Employee employee;
 
 
     public SnackProgramMain() {
@@ -24,14 +24,15 @@ public class SnackProgramMain {
         pantry = new SnackPantry();
         request = new SnackRequest(pantry);
         emp = new EmployeePage(pantry, request);
-        mgr = new ManagerPage();
-        snackPage = new SnackPage(pantry, request);
         empMgr = new EmployeeManager();
+        mgr = new ManagerPage(empMgr);
+        snackPage = new SnackPage(pantry, request);
     }
 
     // 시작 페이지
     public void mainMenu() {
         System.out.println("Together Inc. 홈페이지에 오신것을 환영합니다.");
+        Employee employee;
         while (true) { // 프로그램 종료할 때 까지 나오는 메인 페이지
             System.out.println("================= 로그인 =================");
             while (true) { // 아이디가 존재하는지 체크
