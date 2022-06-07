@@ -64,7 +64,7 @@ public class SnackPage {
     //---------------- case1 1. 탕비실 재고 관리 ----------------//
     private void managePantryStock() {
         while (true) {
-            System.out.println("# 탕비실 재고 관리 페이지입니다.");
+            System.out.println("\n# 탕비실 재고 관리 페이지입니다.");
             System.out.println("======================================");
             pantry.printSnackPantry();
             System.out.println("======================================");
@@ -109,7 +109,7 @@ public class SnackPage {
             System.out.println("수정할 간식 데이터가 없습니다.");
             return;
         }
-        System.out.println("# 수정할 간식 데이터의 이름을 입력해 주세요. ");
+        System.out.println("\n# 수정할 간식 데이터의 이름을 입력해 주세요. ");
         String targetName = inputStr(">> ");
         int targetIdx = pantry.findIndexByName(targetName);
         // 수정 시작
@@ -137,7 +137,7 @@ public class SnackPage {
             System.out.println("삭제할 간식 데이터가 없습니다.");
             return;
         }
-        System.out.println("# 삭제할 간식 데이터의 이름을 입력해 주세요. ");
+        System.out.println("\n# 삭제할 간식 데이터의 이름을 입력해 주세요. ");
         String targetName = inputStr(">> ");
         int targetIdx = pantry.findIndexByName(targetName);
         // idx 존재할 경우 삭제 시작
@@ -154,7 +154,7 @@ public class SnackPage {
 
     // 1-3 재고 추가 구매
     private void refillStock() {
-        System.out.println("# 재구매할 상품의 이름을 입력해 주세요. ");
+        System.out.println("\n# 재구매할 상품의 이름을 입력해 주세요. ");
         String targetName = inputStr(" >> ");
         int targetIdx = pantry.findIndexByName(targetName);
         // 입력받은 문자와 배열의 과자 이름 중 하나와 동일할 때
@@ -178,7 +178,7 @@ public class SnackPage {
 
     // 1-4. 간식 반품하기
     private void returnStock() {
-        System.out.println("# 반품할 상품의 이름을 입력해 주세요. ");
+        System.out.println("\n# 반품할 상품의 이름을 입력해 주세요. ");
         String targetName = inputStr(" >> ");
         int targetIdx = pantry.findIndexByName(targetName);
         // 입력받은 문자와 배열의 과자 이름 중 하나와 동일할 때
@@ -191,17 +191,13 @@ public class SnackPage {
             // 전체 환불
             if (returnStock <= 0) {
                 System.out.printf("%s %d개를 전체 반품합니다. \n", targetName, targetStock);
-                System.out.println("budget = " + budget);
                 budget += targetStock * targetPrice;
-                System.out.println("budget = " + budget);
                 pantry.getSnacks()[targetIdx].setStock(0);
             }
             // 부분 환불
             else if (returnStock <= targetStock) {
                 System.out.printf("%s %d개를 반품합니다. \n", targetName, returnStock);
-                System.out.println("targetPrice = " + targetPrice);
                 budget += returnStock * targetPrice;
-                System.out.println("budget = " + budget);
 
                 pantry.getSnacks()[targetIdx].setStock(targetStock - returnStock);
             }
@@ -219,7 +215,7 @@ public class SnackPage {
     //---------------- case 2. 간식 신청서 관리 ----------------//
     private void manageSnackRequest() {
         while (true) {
-            System.out.println("# 간식 신청서 관리 페이지입니다.");
+            System.out.println("\n# 간식 신청서 관리 페이지입니다.");
             System.out.println("======================================");
             if(request.getNumRequests() <= 0){
                 System.out.println("[현재 신청 간식이 없습니다.]");
@@ -263,7 +259,7 @@ public class SnackPage {
             return;
         }
 
-        System.out.println("# 구매할 간식의 이름을 입력해 주세요. ");
+        System.out.println("\n# 구매할 간식의 이름을 입력해 주세요. ");
         String targetName = inputStr(">> ");
         int targetNum = request.searchByName(targetName);
         // 이름이 신청서에 없을 때
@@ -305,7 +301,7 @@ public class SnackPage {
 
     // 2-2. 신청 간식 자동 구매
     private void autoAcceptRequest() {
-        System.out.println("가장 많은 신청을 받은 품목을 구매합니다.");
+        System.out.println("\n# 가장 많은 신청을 받은 품목을 구매합니다.");
         System.out.println("계속하시겠습니까? [Y/N] ");
         while (true) {
             String answer = inputStr(" >> ");
@@ -324,7 +320,7 @@ public class SnackPage {
 
     // 2-3 신청서 삭제하기
     private void clearRequest() {
-        System.out.println("신청받은 항목을 전체 지웁니다.");
+        System.out.println("\n # 신청받은 항목을 전체 지웁니다.");
         System.out.println("계속하시겠습니까? [Y/N] ");
         while (true) {
             String answer = inputStr(" >> ");
@@ -342,8 +338,8 @@ public class SnackPage {
 
     //---------------- case 3. 간식 구입 ----------------//
     private void manualbuySnack() {
-        System.out.println("# 간식을 구입하는 페이지입니다.");
-        System.out.println("# 구입을 계속하시겠습니까? [Y/N] ");
+        System.out.println("\n# 간식을 구입하는 페이지입니다.");
+        System.out.println("구입을 계속하시겠습니까? [Y/N] ");
         while (true) {
             String answer = inputStr(" >> ");
             switch (answer.toUpperCase().charAt(0)) {
@@ -361,7 +357,7 @@ public class SnackPage {
 
     //---------------- case 4. 간식비 관리----------------//
     private void manageSnackBudget() {
-        System.out.println("# 간식비를 관리하는 페이지입니다.");
+        System.out.println("\n# 간식비를 관리하는 페이지입니다.");
         System.out.println("간식비 잔액: " + budget);
         System.out.println("탕비실 현금: " + pantry.getMoney());
         System.out.println("탕비실의 현금을 회수하시겠습니까? [Y/N] ");
