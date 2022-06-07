@@ -445,7 +445,7 @@ public class ManagerPage {
 
     //6-3번 메뉴 처리 budget 조회
     public void printBudget() {
-        System.out.printf("=======현재 남은 간식비는 %d 입니다.=======\n\n", e.printSnackCost());
+        System.out.printf("=======현재 남은 간식비는 %d 입니다.=======\n\n", e.printSnackCost(list));
     }
 
 //========================================================================//
