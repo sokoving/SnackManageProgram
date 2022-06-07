@@ -59,7 +59,10 @@ public class SnackProgramMain {
             }
 
             // 로그인 성공했을 경우
-            char rank = employee.getNumber().charAt(0);
+
+            char rank = '0';
+            if (employee.getNumber().equals("00000")) rank = '1';
+            else if (employee.getNumber().equals("00001")) rank = '2';
             if (rank == '0') emp.employeePage(employee); // 직원 페이지
             else if (rank == '1') { // 사원 관리자 일 겨우
                 boolean loop = true;

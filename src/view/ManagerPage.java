@@ -424,7 +424,7 @@ public class ManagerPage {
         e.groupPayment();
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
-        list.insert(dateFormat.format(date), "전체지급", 50000);
+        list.insert(dateFormat.format(date), "전체지급", 50000*e.existEmployee());
     }
 
     //6-2번 메뉴 처리 특정 사원에게 간식비를 지급
