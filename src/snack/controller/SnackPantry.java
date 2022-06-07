@@ -8,23 +8,10 @@ import java.util.Arrays;
 // 간식 탕비실
 public class SnackPantry {
 
-    // 최대 간식 종류 개수
-    public static final int SIZE = 10;
-
-    // 탕비실에 있는 간식들을 저장하는 배열
-    private Snack[] snacks;
-
-    private int count;
-
-    private int money;
-
-    public int getMoney() {
-        return money;
-    }
-
-    public void setMoney(int money) {
-        this.money = money;
-    }
+    public static final int SIZE = 10;    // 최대 간식 종류 개수
+    private Snack[] snacks;         // 탕비실에 있는 간식들을 저장하는 배열
+    private int count;      // snacks 배열에 실제 있는 데이터 수
+    private int money;      // 사원이 간식을 사고 내는 돈을 저장하는 필드
 
     public SnackPantry() {
         snacks = new Snack[SIZE];
@@ -86,5 +73,13 @@ public class SnackPantry {
 
     public int getCount() {
         return count;
+    }
+
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
     }
 }
