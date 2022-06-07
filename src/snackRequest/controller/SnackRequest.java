@@ -37,16 +37,21 @@ public class SnackRequest {
     // 간식 신청 마감, 가장 많이 신청된 간식 추가
     public int closeRequest() {
 
-        System.out.print("과자 가격: ");
+        System.out.print("간식 가격: ");
         Scanner sc = new Scanner(System.in);
         int price = sc.nextInt();
+        sc.nextLine();
+        System.out.print("간식 수량: ");
+        int stock = sc.nextInt();
         sc.nextLine();
 
         // 간식 이름과 신청수 매칭해서 넣어주는 맵
         Map<String, Integer> map = new HashMap();
         for (String request : requests) {
-            if (!map.containsKey(request)) map.put(request, 1);
-            else map.put(request, map.get(request) + 1);
+            if (request != null) {
+                if (!map.containsKey(request)) map.put(request, 1);
+                else map.put(request, map.get(request) + 1);
+            }
         }
 
         String select = "";
@@ -56,11 +61,15 @@ public class SnackRequest {
             if (entry.getValue() > max) {
                 max = entry.getValue();
                 select = entry.getKey();
+                System.out.println("select = " + select);
             }
         }
+        System.out.println("=============");
+        System.out.println("max = " + max);
+        System.out.println("select = " + select);
 
         // empty가 아닐 경우에 탕비실에 추가
-        if (!select.isEmpty()) pantry.add(select, price);
+        if (!select.isEmpty()) pantry.add(select, price, stock);
 
         return price * 10;
 

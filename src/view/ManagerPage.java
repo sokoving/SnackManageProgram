@@ -202,7 +202,6 @@ public class ManagerPage {
         }
 
         String newPw = inputStr("- 새로운 비밀번호 ");
-        System.out.println(newPw.length() > 9 && newPw.length() <= 6);
         if (newPw.length() != 5) {
             System.out.println("\n password 수정 실패!");
             System.out.println("password는 5~8자리로 설정해주세요.");
