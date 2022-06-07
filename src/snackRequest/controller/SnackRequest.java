@@ -21,6 +21,14 @@ public class SnackRequest {
 
     public SnackRequest(SnackPantry pantry) {
         requests = new String[MAX_REQUEST];
+        requests[0] = "초코칩";
+        requests[1] = "홈런볼";
+        requests[2] = "제로콜라";
+        requests[3] = "제로콜라";
+        requests[4] = "제로콜라";
+
+        numRequests = 5;
+
         this.pantry = pantry;
     }
 
