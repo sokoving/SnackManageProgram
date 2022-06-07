@@ -234,7 +234,11 @@ public class EmployeeManager {
     }
 
     // 간식비 계좌인 budget을 출력
-    public int printSnackCost() {
+    public int printSnackCost(ListController list) {
+        ListController lc = list;
+        for (List l : lc.printList()) {
+            if (l != null) System.out.println(l.inform());
+        }
         return budget;
     }
 

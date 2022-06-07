@@ -2,8 +2,13 @@ package view;
 
 import employee.Employee;
 import employee.EmployeeManager;
+import employee.List;
+import employee.ListController;
 
 import java.lang.reflect.Member;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class ManagerPage {
@@ -12,6 +17,7 @@ public class ManagerPage {
     public ManagerPage(EmployeeManager empMgr) {
          e = empMgr;
     }
+    private ListController list = new ListController();
 
     // 3. 사원 관리자 메뉴
     public void EmployeeManagerMenu() {
@@ -416,6 +422,9 @@ public class ManagerPage {
 
     public void EmployeeGroupPayment() {
         e.groupPayment();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        list.insert(dateFormat.format(date), "전체지급", 50000);
     }
 
     //6-2번 메뉴 처리 특정 사원에게 간식비를 지급
@@ -427,11 +436,15 @@ public class ManagerPage {
 
         e.payment(specialEmployee, snackCost);
 
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        list.insert(dateFormat.format(date), e.searchNumber(specialEmployee).getName(), snackCost);
+
     }
 
     //6-3번 메뉴 처리 budget 조회
     public void printBudget() {
-        System.out.printf("=======현재 남은 간식비는 %d 입니다.=======\n\n", e.printSnackCost());
+        System.out.printf("=======현재 남은 간식비는 %d 입니다.=======\n\n", e.printSnackCost(list));
     }
 
 //========================================================================//
